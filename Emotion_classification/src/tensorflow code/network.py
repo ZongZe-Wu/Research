@@ -11,7 +11,7 @@ class TextCNN(object):
 	A CNN for text classification.
 	Uses an embedding layer, followed by a convolutional, max-pooling and softmax layer.
 	"""
-	def __init__(self, sequence_length, num_classes, vocab_size, embedding_size, num_filters, dropout_keep_prob, lambda_l2):
+	def __init__(self, sequence_length, num_classes, vocab_size, embedding_size, num_filters, lambda_l2):
 		self.name = 'TextCNN'
 		print(self.name)
 		self.sequence_length = sequence_length # 21
@@ -20,12 +20,13 @@ class TextCNN(object):
 		self.embedding_size = embedding_size
 		self.num_filters = num_filters # 128	
 		self.filter_size = [2, 3,4,5]
-		self.dropout_keep_prob = dropout_keep_prob
+		#self.dropout_keep_prob = dropout_keep_prob
 		# Keeping track of l2 regularization loss (optional)
 		self.l2_loss = tf.constant(0.0)
 		self.lambda_l2 = lambda_l2
 		self.input_x = tf.placeholder(tf.int32, [None, sequence_length], name="input_x")
 		self.input_y = tf.placeholder(tf.int64, [None, ], name="input_y")
+		self.dropout_keep_prob = tf.placeholder(tf.float32, name='dropout_keep_prob')
 		#self.test_building(self.input_x)
 		self.build_network()
 		with tf.control_dependencies(tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
