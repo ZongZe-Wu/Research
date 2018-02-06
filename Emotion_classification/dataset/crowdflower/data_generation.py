@@ -72,12 +72,19 @@ def main():
 				buf = list(filter(str.strip, buf))
 				max_len = find_max_length(max_len, len(buf))
 				if len(buf) <= MAX_LEN_SEQUENCE:
+					buf1 = ''
+					for i in range(len(buf)):
+						buf1 += buf[i]+' '
+					print(buf1)
+					data_origin.append(buf1)
 					data.append(buf)
 					label.append(emotion_filename.index(emo))
 	print('data length : ', len(data)) # 40000
 	print('label length : ', len(label)) # 40000
 	print('max len : ', max_len)
 	print(data[1])
+	np.save('train_data/data_origin.npy', data_origin)
+	np.save('train_data/label.npy', label)
 	X_train, X_test, y_train, y_test = train_test_split(data, label, test_size=0.1, random_state=42)
 	# np.save('train_data/x_train.npy', X_train)
 	# np.save('train_data/y_train.npy', y_train)

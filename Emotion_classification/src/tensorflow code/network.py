@@ -24,16 +24,17 @@ class TextCNN(object):
 		# Keeping track of l2 regularization loss (optional)
 		self.l2_loss = tf.constant(0.0)
 		self.lambda_l2 = lambda_l2
-		#self.input_x = tf.placeholder(tf.int32, [None, sequence_length], name="input_x")
+		self.input_x = tf.placeholder(tf.int32, [None, sequence_length], name="input_x")
+		self.input_y = tf.placeholder(tf.int64, [None, ], name="input_y")
 		#self.test_building(self.input_x)
+		self.build_network()
 		with tf.control_dependencies(tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
 			self.train_op = tf.train.AdamOptimizer(learning_rate=1e-4, beta1=0.6, beta2=0.9).minimize(self.loss)
-
-	def test_building(self, input_x):
+	def build_network(self):
 		with tf.variable_scope(self.name):
 			with tf.variable_scope('Embedding'):
 				self.W = tf.Variable(tf.random_uniform([self.vocab_size, self.embedding_size], -1.0, 1.0), name="W")
-				self.embedded_chars = tf.nn.embedding_lookup(self.W, input_x)
+				self.embedded_chars = tf.nn.embedding_lookup(self.W, self.input_x)
 				self.embedded_chars_expanded = tf.expand_dims(self.embedded_chars, -1)
 				print('embedded_chars_expanded.shape : ', self.embedded_chars_expanded.shape)
 			pooled_outputs = []
@@ -59,7 +60,7 @@ class TextCNN(object):
 			with tf.name_scope("dropout"):
 				self.h_drop = dropout(self.h_pool_flat, self.dropout_keep_prob)
 			with tf.name_scope("output"):
-				W_output = weight_variables([len(self.filter_size), self.num_classes], name = 'W_output')
+				W_output = weight_variables([num_filters_total, self.num_classes], name = 'W_output')
 				b_output = bias_variables([self.num_classes], name = 'b_output')
 				self.l2_loss += tf.nn.l2_loss(W_output)
 				self.l2_loss += tf.nn.l2_loss(b_output)
@@ -68,14 +69,17 @@ class TextCNN(object):
 
 			# Calculate mean cross-entropy loss
 			with tf.name_scope("loss"):
-				losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=input_y)
+				print('score dim : ', self.scores.shape)
+				print('input_y dim : ', self.input_y.shape)
+				losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
 				self.loss = tf.reduce_mean(losses) + self.lambda_l2*self.l2_loss
 			# Accuracy
 			with tf.name_scope("accuracy"):
-				correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
+				correct_predictions = tf.equal(self.predictions, self.input_y)
 				self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
 
 
+	'''			
 	def __call__(self, input_x, input_y):
 		with tf.variable_scope(self.name):
 			with tf.variable_scope('Embedding'):
@@ -121,9 +125,10 @@ class TextCNN(object):
 			with tf.name_scope("accuracy"):
 				correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
 				self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
-
-
-network = TextCNN(20,10,500,100,128)
+			with tf.control_dependencies(tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
+				self.train_op = tf.train.AdamOptimizer(learning_rate=1e-4, beta1=0.6, beta2=0.9).minimize(self.loss)
+	'''
+#network = TextCNN(20,10,500,100,128)
 
 
 
