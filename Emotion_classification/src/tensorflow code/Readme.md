@@ -6,9 +6,10 @@ Then, run the file :
 
 
 Performance : 
-	crowdflower :
-	![Alt text](tensorflow_code_crowdflower/Valid.png?raw=true "Loss and Accuracy for validation set")
+
+crowdflower :
+	![Alt text](tensorflow_code_crowdflower/Valid.png "Loss and Accuracy for validation set")
 
 
-	Emotion_Intensity :
-	![Alt text](tensorflow_code_Emotion_Intensity/Valid.png?raw=true "Loss and Accuracy for validation set")
+Emotion_Intensity :
+	![Alt text](tensorflow_code_Emotion_Intensity/Valid.png "Loss and Accuracy for validation set")
