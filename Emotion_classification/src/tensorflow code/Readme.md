@@ -8,11 +8,11 @@
 # Performance : 
 
 ## crowdflower :
-	![Alt text](tensorflow_code_crowdflower/Valid.png "Loss and Accuracy for validation set")
+![Loss and Accuracy for validation set](tensorflow_code_crowdflower/Valid.png "Loss and Accuracy for validation set")
 
 
 
 
 
 ## Emotion_Intensity :
-	![Alt text](tensorflow_code_Emotion_Intensity/Valid.png "Loss and Accuracy for validation set")
+![Loss and Accuracy for validation set](tensorflow_code_Emotion_Intensity/Valid.png "Loss and Accuracy for validation set")
