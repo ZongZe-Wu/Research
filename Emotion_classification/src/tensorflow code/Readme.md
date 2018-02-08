@@ -10,9 +10,8 @@
 ## crowdflower :
 ![Loss and Accuracy for validation set](tensorflow_code_crowdflower/Valid.png "Loss and Accuracy for validation set")
 
-
-
-
-
 ## Emotion_Intensity :
 ![Loss and Accuracy for validation set](tensorflow_code_Emotion_Intensity/Valid.png "Loss and Accuracy for validation set")
+
+## SemEval-2018-reg :
+![Loss and Accuracy for validation set](tensorflow_code_SemEval-2018/Valid.png "Loss and Accuracy for validation set")

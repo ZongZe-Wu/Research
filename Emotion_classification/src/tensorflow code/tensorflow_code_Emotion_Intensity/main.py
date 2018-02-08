@@ -70,7 +70,7 @@ def main(args, textcnn, batch_generation, batch_size, batch_epoch = 100000):
 				print("SAVEEEEE MODELLLLLLL")
 				saver.save(sess, "Model/model.ckpt")
 			if (ep+1) % 5000 == 0:
-				plt.figure(1)
+				fig1 = plt.figure(1)
 				#plt.title('training')
 				plt.subplot(211)
 				plt.plot(np.arange(len(training_loss_list)),training_loss_list)
@@ -78,7 +78,8 @@ def main(args, textcnn, batch_generation, batch_size, batch_epoch = 100000):
 				plt.plot(np.arange(len(training_acc_list)),training_acc_list)
 				plt.pause(1e-18)
 				plt.show()
-				plt.figure(2)
+				fig1.savefig('Train'+'.png')
+				fig2 = plt.figure(2)
 				#plt.title('valid')
 				plt.subplot(211)
 				plt.plot(np.arange(len(valid_loss_list)),valid_loss_list)
@@ -86,6 +87,7 @@ def main(args, textcnn, batch_generation, batch_size, batch_epoch = 100000):
 				plt.plot(np.arange(len(valid_acc_list)),valid_acc_list)
 				plt.pause(1e-18)
 				plt.show()
+				fig2.savefig('Valid'+'.png')
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser('')
 	parser.add_argument('--train', action='store_true', help='whether train TextCNN')
@@ -110,16 +112,16 @@ if __name__ == '__main__':
 	batch_size = 128
 	if args.train:
 		sequence_length = len(X_train[0])
-		num_classes = 13
-		vocab_size = 5567
+		num_classes = 4
+		vocab_size = len(vocab_processor.vocabulary_)
 		embedding_size = 256
 		num_filters = 128
 		dropout_keep_prob = 0.8
 		lambda_l2 = 0.01
 	if args.test:
 		sequence_length = len(X_train[0])
-		num_classes = 13
-		vocab_size = 5567
+		num_classes = 4
+		vocab_size = len(vocab_processor.vocabulary_)
 		embedding_size = 256
 		num_filters = 128
 		dropout_keep_prob = 1
