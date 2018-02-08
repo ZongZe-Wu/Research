@@ -8,11 +8,13 @@
 
 	install twitter by : pip3 install twitter
 
-## Run the test.py
-	python3 test.py > twitter_stream_1000tweets.txt
+## Run the stream_api.py
+	Remember to change the your_information in the file to run
+
+	python3 stream_api.py > twitter_stream_1000tweets.txt
 
 ## Run the preprocess_tweets.py
-
+	python3 preprocess_tweets.py
 
 ## Data format figure example :
 ![format figure](data_format_check.png "Format figure")	
