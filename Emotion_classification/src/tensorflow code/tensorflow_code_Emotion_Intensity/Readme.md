@@ -1,1 +1,1 @@
-![Alt text](Valid.png?raw=true "Loss and Accuracy for validation set")
+![What is this](Valid.png?raw=true "Loss and Accuracy for validation set")
